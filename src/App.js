@@ -1,12 +1,10 @@
 import { BrowserRouter, Switch } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./config/routes";
 import PublicRoutes from "./components/PublicRoutes/PublicRoutes";
-import { createBrowserHistory } from "history";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-
-export const history = createBrowserHistory();
+import "./sass-utils/main.scss";
 
 function App() {
   return (
