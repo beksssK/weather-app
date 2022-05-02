@@ -8,6 +8,8 @@ import React, {
 import "./Slider.scss";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import arrowButton from "./../../assets/icons/right-solid.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle, faDotCircle } from "@fortawesome/free-regular-svg-icons";
 
 const Slider = ({ items }) => {
   const slidesPerShow = 3;
@@ -24,27 +26,37 @@ const Slider = ({ items }) => {
     { img: "https://picsum.photos/500/600" },
     { img: "https://picsum.photos/500/600" },
   ];
-  const lastItemIndex = useMemo(() => temp.length - 1, [temp]);
-  const [windowSize] = useWindowSize();
   const [currentItem, setCurrentItem] = useState(0);
-  const slider = useRef(null);
   const [sliderWidth, setSliderWidth] = useState(null);
+
+  const [windowSize] = useWindowSize();
+  const slider = useRef(null);
+
+  const lastItemIndex = useMemo(() => temp.length - 1, [temp]);
+  const offset = useMemo(() => {
+    return currentItem * (sliderWidth / slidesPerShow);
+  }, [currentItem, sliderWidth, slidesPerShow]);
+
+  const lastShowingItem = useMemo(
+    () => lastItemIndex - slidesPerShow + 1,
+    [lastItemIndex, slidesPerShow]
+  );
 
   useEffect(() => {
     setSliderWidth(slider.current.offsetWidth);
   }, [slider, windowSize]);
 
   const nextSlider = useCallback(() => {
-    if (lastItemIndex - slidesPerShow + 1 < currentItem + slidesToScroll) {
-      if (lastItemIndex - slidesPerShow + 1 === currentItem) {
+    if (lastShowingItem < currentItem + slidesToScroll) {
+      if (lastShowingItem === currentItem) {
         setCurrentItem(0);
       } else {
-        setCurrentItem(lastItemIndex - slidesPerShow + 1);
+        setCurrentItem(lastShowingItem);
       }
     } else {
       setCurrentItem(currentItem + slidesToScroll);
     }
-  }, [currentItem, lastItemIndex, slidesPerShow]);
+  }, [currentItem, lastShowingItem]);
 
   const previousSlider = useCallback(() => {
     if (currentItem - slidesToScroll >= 0) {
@@ -56,52 +68,70 @@ const Slider = ({ items }) => {
     }
   }, [currentItem, lastItemIndex, slidesToScroll]);
 
-  const offset = useMemo(() => {
-    return currentItem * (sliderWidth / slidesPerShow);
-  }, [currentItem, sliderWidth, slidesPerShow]);
+  const handleDotClick = useCallback(
+    (idx) => {
+      if (lastShowingItem <= idx) {
+        setCurrentItem(lastShowingItem);
+      } else {
+        setCurrentItem(idx);
+      }
+    },
+    [lastShowingItem]
+  );
 
   return (
-      <div className="slider" ref={slider}>
-        <div
-          className="slider__track"
-          style={{
-            width: `${sliderWidth * temp.length}px`,
-            left: `-${offset}px`,
-          }}
-        >
-          {temp.map((item, idx) => (
-            <div
-              style={{
-                width: `${sliderWidth / slidesPerShow}px`,
-              }}
-              key={idx}
-              className={
-                currentItem === idx
-                  ? "slider__item slider__item--active"
-                  : "slider__item"
-              }
-            >
-              <div className="slider__content">
-                <div className="slider__info">some info - {idx}</div>
-                <img className="slider__img" src={item.img} alt="" />
-              </div>
+    <div className="slider" ref={slider}>
+      <div
+        className="slider__track"
+        style={{
+          width: `${sliderWidth * temp.length}px`,
+          left: `-${offset}px`,
+        }}
+      >
+        {temp.map((item, idx) => (
+          <div
+            style={{
+              width: `${sliderWidth / slidesPerShow}px`,
+            }}
+            key={idx}
+            className="slider__item"
+          >
+            <div className="slider__content">
+              <div className="slider__info">some info - {idx}</div>
+              <img className="slider__img" src={item.img} alt="" />
             </div>
-          ))}
-        </div>
-        <div className="slider__buttons">
-          <button
-            className="slider__button slider__button--previous"
-            style={{ backgroundImage: `url(${arrowButton})` }}
-            onClick={previousSlider}
-          />
-          <button
-            style={{ backgroundImage: `url(${arrowButton})` }}
-            className="slider__button"
-            onClick={nextSlider}
-          />
-        </div>
+          </div>
+        ))}
       </div>
-
+      <div className="slider__buttons">
+        <button
+          className="slider__button slider__button--previous"
+          style={{ backgroundImage: `url(${arrowButton})` }}
+          onClick={previousSlider}
+        />
+        <button
+          style={{ backgroundImage: `url(${arrowButton})` }}
+          className="slider__button"
+          onClick={nextSlider}
+        />
+      </div>
+      <ul className="slider__dots">
+        {temp.map((item, idx) => (
+          <li className="slider__dot" key={idx}>
+            <button
+              className="slider__dot-button"
+              onClick={() => handleDotClick(idx)}
+            >
+              {idx === currentItem ? (
+                <FontAwesomeIcon icon={faDotCircle} />
+              ) : (
+                <FontAwesomeIcon icon={faCircle} />
+              )}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

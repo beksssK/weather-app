@@ -49,4 +49,15 @@
       transform: rotate(180deg);
     }
   }
+  &__dots {
+    list-style: none;
+    text-align: center;
+  }
+  &__dot {
+    display: inline-block;
+    &-button {
+      border: none;
+      background: none;
+    }
+  }
 }
