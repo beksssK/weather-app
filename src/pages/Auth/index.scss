@@ -1,0 +1,12 @@
+.authorization-form {
+  padding: 40px;
+  &__input {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
+  &__label {
+    margin-bottom: 10px;
+    display: block;
+  }
+}
