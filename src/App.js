@@ -7,7 +7,6 @@ import Login from "./pages/Auth/Login/Login";
 import Detailed from "./pages/Detailed/Detailed";
 
 function App() {
-  console.log("update");
   return (
     <Provider store={store}>
       <BrowserRouter>
