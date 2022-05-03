@@ -10,6 +10,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faDotCircle } from "@fortawesome/free-regular-svg-icons";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
   const [currentItem, setCurrentItem] = useState(0);
@@ -76,7 +77,9 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
           }}
         >
           {items.map((item, idx) => (
-            <div
+            <Link
+              exact="exact"
+              to={`/detailed?lon=${item.coord.lon}&lat=${item.coord.lat}`}
               style={{
                 width: `${sliderWidth / slidesPerShow}px`,
               }}
@@ -91,24 +94,22 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
               >
                 <div className="slider__info">{item?.info}</div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
-      <div className="slider__buttons">
-        <button
-          className="slider__button slider__button--previous"
-          onClick={previousSlider}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="slider__button-icon" />
-        </button>
-        <button className="slider__button" onClick={nextSlider}>
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            className="slider__button-icon"
-          />
-        </button>
-      </div>
+      <button
+        className="slider__button slider__button--previous"
+        onClick={previousSlider}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} className="slider__button-icon" />
+      </button>
+      <button
+        className="slider__button slider__button--next"
+        onClick={nextSlider}
+      >
+        <FontAwesomeIcon icon={faArrowRight} className="slider__button-icon" />
+      </button>
       <ul className="slider__dots">
         {items.map((item, idx) => (
           <li className="slider__dot" key={idx}>

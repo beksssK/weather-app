@@ -1,23 +1,21 @@
-import { BrowserRouter, Switch } from "react-router-dom";
-import { privateRoutes, publicRoutes } from "./config/routes";
-import PublicRoutes from "./components/PublicRoutes/PublicRoutes";
-import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import "./sass-utils/main.scss";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Login from "./pages/Auth/Login/Login";
+import Detailed from "./pages/Detailed/Detailed";
 
 function App() {
+  console.log("update");
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Switch>
-          {publicRoutes.map((route) => (
-            <PublicRoutes key={route.path} {...route} />
-          ))}
-          {privateRoutes.map((route) => (
-            <PrivateRoutes key={route.path} {...route} />
-          ))}
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/detailed" element={<Detailed />} />
+        </Routes>
       </BrowserRouter>
     </Provider>
   );

@@ -1,10 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import weatherApi from "../api/weatherApi";
 import googleMapsApi from "../api/googleMapsApi";
-
-const initialState = {
-  weather: [],
-};
 
 export const getWeather = async (city) => {
   const weather = await weatherApi.get("/weather", {
@@ -48,17 +44,3 @@ export const fetchGeneralWeather = createAsyncThunk(
     });
   }
 );
-
-const generalWeatherSlice = createSlice({
-  name: "generalWeather",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchGeneralWeather.fulfilled, (state, action) => {
-      // Add user to the state array
-      state.weather = action.payload;
-    });
-  },
-});
-
-export default generalWeatherSlice.reducer;
