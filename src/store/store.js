@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tempReducer from "./temp";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import generalWeatherReducer from "../services/generalWeather";
 
 export const store = configureStore({
   reducer: {
-    temp: tempReducer,
+    generalWeather: generalWeatherReducer,
   },
 });
+
+setupListeners(store.dispatch);

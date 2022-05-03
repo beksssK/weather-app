@@ -11,28 +11,17 @@ import arrowButton from "./../../assets/icons/right-solid.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faDotCircle } from "@fortawesome/free-regular-svg-icons";
 
-const Slider = ({ items }) => {
-  const slidesPerShow = 3;
-  const slidesToScroll = 2;
-  const temp = [
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-    { img: "https://picsum.photos/500/600" },
-  ];
+const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
+  // const slidesPerShow = 3;
+  // const slidesToScroll = 2;
+
   const [currentItem, setCurrentItem] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(null);
 
   const [windowSize] = useWindowSize();
   const slider = useRef(null);
 
-  const lastItemIndex = useMemo(() => temp.length - 1, [temp]);
+  const lastItemIndex = useMemo(() => items.length - 1, [items]);
   const offset = useMemo(() => {
     return currentItem * (sliderWidth / slidesPerShow);
   }, [currentItem, sliderWidth, slidesPerShow]);
@@ -84,11 +73,11 @@ const Slider = ({ items }) => {
       <div
         className="slider__track"
         style={{
-          width: `${sliderWidth * temp.length}px`,
+          width: `${sliderWidth * items.length}px`,
           left: `-${offset}px`,
         }}
       >
-        {temp.map((item, idx) => (
+        {items.map((item, idx) => (
           <div
             style={{
               width: `${sliderWidth / slidesPerShow}px`,
@@ -116,7 +105,7 @@ const Slider = ({ items }) => {
         />
       </div>
       <ul className="slider__dots">
-        {temp.map((item, idx) => (
+        {items.map((item, idx) => (
           <li className="slider__dot" key={idx}>
             <button
               className="slider__dot-button"

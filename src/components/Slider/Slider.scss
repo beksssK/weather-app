@@ -41,6 +41,7 @@
     justify-content: space-between;
   }
   &__button {
+    cursor: pointer;
     border: none;
     background-color: transparent;
     width: 60px;
@@ -56,6 +57,7 @@
   &__dot {
     display: inline-block;
     &-button {
+      cursor: pointer;
       border: none;
       background: none;
     }
