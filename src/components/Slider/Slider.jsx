@@ -7,14 +7,11 @@ import React, {
 } from "react";
 import "./Slider.scss";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import arrowButton from "./../../assets/icons/right-solid.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faDotCircle } from "@fortawesome/free-regular-svg-icons";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
-  // const slidesPerShow = 3;
-  // const slidesToScroll = 2;
-
   const [currentItem, setCurrentItem] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(null);
 
@@ -45,7 +42,7 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
     } else {
       setCurrentItem(currentItem + slidesToScroll);
     }
-  }, [currentItem, lastShowingItem]);
+  }, [currentItem, lastShowingItem, slidesToScroll]);
 
   const previousSlider = useCallback(() => {
     if (currentItem - slidesToScroll >= 0) {
@@ -69,40 +66,48 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
   );
 
   return (
-    <div className="slider" ref={slider}>
-      <div
-        className="slider__track"
-        style={{
-          width: `${sliderWidth * items.length}px`,
-          left: `-${offset}px`,
-        }}
-      >
-        {items.map((item, idx) => (
-          <div
-            style={{
-              width: `${sliderWidth / slidesPerShow}px`,
-            }}
-            key={idx}
-            className="slider__item"
-          >
-            <div className="slider__content">
-              <div className="slider__info">some info - {idx}</div>
-              <img className="slider__img" src={item.img} alt="" />
+    <div className="slider__wrapper">
+      <div className="slider" ref={slider}>
+        <div
+          className="slider__track"
+          style={{
+            width: `${sliderWidth * items.length}px`,
+            left: `-${offset}px`,
+          }}
+        >
+          {items.map((item, idx) => (
+            <div
+              style={{
+                width: `${sliderWidth / slidesPerShow}px`,
+              }}
+              key={idx}
+              className="slider__item"
+            >
+              <div
+                className="slider__content"
+                style={{
+                  backgroundImage: `url(${item.img})`,
+                }}
+              >
+                <div className="slider__info">{item?.info}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <div className="slider__buttons">
         <button
           className="slider__button slider__button--previous"
-          style={{ backgroundImage: `url(${arrowButton})` }}
           onClick={previousSlider}
-        />
-        <button
-          style={{ backgroundImage: `url(${arrowButton})` }}
-          className="slider__button"
-          onClick={nextSlider}
-        />
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="slider__button-icon" />
+        </button>
+        <button className="slider__button" onClick={nextSlider}>
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            className="slider__button-icon"
+          />
+        </button>
       </div>
       <ul className="slider__dots">
         {items.map((item, idx) => (

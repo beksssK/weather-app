@@ -1,0 +1,33 @@
+.weather-g-info {
+  padding-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &__main,
+  &__temp {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 20px;
+    border-radius: 30px;
+  }
+  &__title {
+    font-size: 35px;
+    margin: 0;
+  }
+  &__description {
+    font-size: 20px;
+    &--main {
+      margin-bottom: 10px;
+    }
+  }
+  &__temp {
+    text-align: right;
+  }
+  &__main-temp {
+    font-size: 30px;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+  &__humidity {
+    margin-bottom: 10px;
+  }
+}

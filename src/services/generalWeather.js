@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import weatherApi, { WEATHER_API_KEY } from "../api/weatherApi";
+import weatherApi from "../api/weatherApi";
 import googleMapsApi from "../api/googleMapsApi";
 
 const initialState = {
@@ -7,7 +7,9 @@ const initialState = {
 };
 
 export const getWeather = async (city) => {
-  const weather = await weatherApi.get("/weather", { params: { q: city } });
+  const weather = await weatherApi.get("/weather", {
+    params: { q: city, units: "metric" },
+  });
   return weather.data;
 };
 
