@@ -6,6 +6,7 @@ import {
   fetchSingleWeatherHistory,
 } from "../../services/singleWeather";
 import "./index.scss";
+import { format, fromUnixTime } from "date-fns";
 
 const Detailed = () => {
   const { weatherHistory, weather } = useSelector(
@@ -21,7 +22,7 @@ const Detailed = () => {
       dispatch(fetchSingleWeather({ longitude, latitude }));
     }
   }, [searchParams, dispatch]);
-  console.log(weather);
+  console.log(weatherHistory);
   return weatherHistory && weather ? (
     <div className="container">
       <div className="city-details">
@@ -57,6 +58,22 @@ const Detailed = () => {
             />
           </div>
         </div>
+      </div>
+      <div className="weather-table">
+        {weatherHistory.daily.map((weatherDay, idx) => {
+          return (
+            <div key={idx} className="weather-table__item">
+              <div>{format(fromUnixTime(weatherDay.dt), "dd MMM")}</div>
+              <img
+                className="weather-table__icon"
+                src={`http://openweathermap.org/img/wn/${weatherDay.weather[0].icon}@2x.png`}
+                alt="weather icon"
+              />
+              <div className="weather-table__temp weather-table__temp--day">day: {weatherDay.temp.day} &#8451;</div>
+              <div className="weather-table__temp">night: {weatherDay.temp.night} &#8451;</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   ) : (
