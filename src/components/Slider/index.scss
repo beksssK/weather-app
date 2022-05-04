@@ -1,3 +1,5 @@
+@import "src/sass/mixins";
+
 .slider {
   &__wrapper {
     position: relative;
@@ -33,7 +35,7 @@
     z-index: 10;
     color: #fff;
     padding: 10px 10px 10px 40px;
-    @media all and (max-width: 500px) {
+    @include sm {
       padding: 10px;
     }
   }
@@ -48,7 +50,7 @@
     top: 50%;
     position: absolute;
     transform: translateY(-50%);
-    @media all and (max-width: 675px) {
+    @include sm {
       width: 60px;
       height: 60px;
     }
@@ -61,7 +63,7 @@
     &-icon {
       font-size: 45px;
       color: #fff;
-      @media all and (max-width: 675px) {
+      @include sm {
         font-size: 35px;
       }
     }

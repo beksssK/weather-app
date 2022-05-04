@@ -1,3 +1,5 @@
+@import "src/sass/mixins";
+
 .authorization-form {
   padding: 40px;
   &__element {
@@ -10,6 +12,9 @@
     padding: 10px;
     margin-bottom: 20px;
     font-size: 25px;
+    @include xs {
+      width: 100%;
+    }
   }
   &__label {
     margin-bottom: 10px;

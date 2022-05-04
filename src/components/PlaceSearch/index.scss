@@ -1,13 +1,14 @@
+@import "src/sass/mixins";
+
 .place-search {
   &__field {
     padding: 10px;
     font-size: 20px;
     min-width: 300px;
-    @media all and (max-width: 400px) {
+    @include xs {
       min-width: 150px;
     }
   }
-
 }
 
 .place-results {
