@@ -6,8 +6,10 @@ const Auth = ({ children }) => {
   const { authorized } = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!authorized) {
+      navigate("/login");
+    }
   }, [authorized, navigate]);
-  console.log(authorized);
   return <>{children}</>;
 };
 

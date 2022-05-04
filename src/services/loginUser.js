@@ -1,4 +1,4 @@
-export const loginUser = (userData, successCb) => {
+export const loginUser = (userData) => {
   const errorMessage = "Username or password is wrong";
   let users = JSON.parse(localStorage.getItem("users"));
   if (!users) {
@@ -11,5 +11,5 @@ export const loginUser = (userData, successCb) => {
   if (user.password !== userData.password) {
     return errorMessage;
   }
-  successCb();
+  return null;
 };

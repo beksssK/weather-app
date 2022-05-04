@@ -4,8 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "../../services/loginUser";
+import { useDispatch } from "react-redux";
+import { authorize } from "../../store/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const loginInitialValue = {
     username: "",
     password: "",
@@ -14,11 +17,15 @@ const Login = () => {
   const navigate = useNavigate();
   const submitForm = useCallback(
     (values, { setSubmitting, setFieldError }) => {
-      const error = loginUser(values, () => navigate("/"));
+      const error = loginUser(values);
       setFieldError("generalError", error);
       setSubmitting(false);
+      if (!error) {
+        dispatch(authorize());
+        navigate("/");
+      }
     },
-    [navigate]
+    [navigate, dispatch]
   );
   return (
     <div className="container">
