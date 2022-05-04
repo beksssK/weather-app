@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.scss";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Header = () => {
@@ -10,7 +10,9 @@ const Header = () => {
       <div className="container">
         <nav className="header__content">
           <div className="logo">
-            <h2>Weather Info</h2>
+            <h2>
+              <Link className="header__logo" to="/">Weather Info</Link>
+            </h2>
           </div>
           <nav className="main-nav">
             <ul className="main-nav__items">

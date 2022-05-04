@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import Slider from "../../components/Slider/Slider";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGeneralWeather } from "../../services/generalWeather";
 import { GOOGLE_MAPS_API_KEY } from "../../api/googleMapsApi";
 import WeatherGeneralInfo from "../../components/WeatherGeneralInfo/WeatherGeneralInfo";
 import "./index.scss";
+import PlaceSearch from "../../components/PlaceSearch/PlaceSearch";
 
 const Dashboard = () => {
   const weather = useSelector((state) => state.generalWeather.weather);
@@ -29,11 +30,6 @@ const Dashboard = () => {
       fetchGeneralWeather(["Moscow", "London", "New York", "Beijing", "Paris"])
     );
   }, [dispatch]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const onSearchQueryChange = useCallback((e) => {
-    setSearchQuery(e.target.value);
-  }, []);
-  console.log(sliderItems);
 
   const sliderSettings = {
     slidesPerShow: 2,
@@ -42,10 +38,7 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-      <form action="#">
-        <input type="text" value={searchQuery} onChange={onSearchQueryChange} />
-        <button>Search</button>
-      </form>
+      <PlaceSearch />
       <div className="global-weather">
         <Slider items={sliderItems} settings={sliderSettings} />
       </div>

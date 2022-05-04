@@ -22,7 +22,6 @@ const Detailed = () => {
       dispatch(fetchSingleWeather({ longitude, latitude }));
     }
   }, [searchParams, dispatch]);
-  console.log(weatherHistory);
   return weatherHistory && weather ? (
     <div className="container">
       <div className="city-details">
@@ -69,8 +68,12 @@ const Detailed = () => {
                 src={`http://openweathermap.org/img/wn/${weatherDay.weather[0].icon}@2x.png`}
                 alt="weather icon"
               />
-              <div className="weather-table__temp weather-table__temp--day">day: {weatherDay.temp.day} &#8451;</div>
-              <div className="weather-table__temp">night: {weatherDay.temp.night} &#8451;</div>
+              <div className="weather-table__temp weather-table__temp--day">
+                day: {weatherDay.temp.day} &#8451;
+              </div>
+              <div className="weather-table__temp">
+                night: {weatherDay.temp.night} &#8451;
+              </div>
             </div>
           );
         })}

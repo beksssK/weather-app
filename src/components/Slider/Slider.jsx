@@ -49,11 +49,11 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
     if (currentItem - slidesToScroll >= 0) {
       setCurrentItem(currentItem - slidesToScroll);
     } else if (!currentItem) {
-      setCurrentItem(lastItemIndex - slidesToScroll);
+      setCurrentItem(lastItemIndex - slidesPerShow + 1);
     } else {
       setCurrentItem(0);
     }
-  }, [currentItem, lastItemIndex, slidesToScroll]);
+  }, [currentItem, lastItemIndex, slidesToScroll, slidesPerShow]);
 
   const handleDotClick = useCallback(
     (idx) => {

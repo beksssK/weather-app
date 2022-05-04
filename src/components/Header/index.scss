@@ -2,6 +2,10 @@
   background-color: #496ea2;
   padding: 30px 0;
   color: #fff;
+  &__logo {
+    color: #fff;
+    text-decoration: none;
+  }
   &__content {
     display: flex;
     justify-content: space-between;

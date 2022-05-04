@@ -1,0 +1,15 @@
+.place-search {
+  &__field {
+    padding: 10px;
+    font-size: 20px;
+    min-width: 300px;
+  }
+
+}
+
+.place-results {
+  &__item {
+    padding: 10px 15px 10px 5px;
+    font-size: 20px;
+  }
+}
