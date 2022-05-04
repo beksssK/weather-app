@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   fetchSingleWeather,
   fetchSingleWeatherHistory,
@@ -9,12 +10,30 @@ import "./index.scss";
 import { format, fromUnixTime } from "date-fns";
 import { STATUS } from "../../store/conf";
 import Preloader from "../../components/Preloader/Preloader";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { togglePlace } from "../../services/togglePlace";
+import { toggleUserPlace } from "../../store/userSlice";
 
 const Detailed = () => {
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.user);
   const { weatherHistory, weather, weatherStatus, weatherHistoryStatus } =
     useSelector((state) => state.singleWeather);
+
+  const bookmarked = useMemo(() => {
+    if (!user || !weather) {
+      return false;
+    }
+    return user.places.some((place) => place === weather.name);
+  }, [user, weather]);
+  const handleBookmark = useCallback(() => {
+    togglePlace(weather.name);
+    dispatch(toggleUserPlace(weather.name));
+  }, [weather, dispatch]);
+
   const [searchParams] = useSearchParams();
-  const dispatch = useDispatch();
+
   useEffect(() => {
     const longitude = searchParams.get("lon");
     const latitude = searchParams.get("lat");
@@ -23,6 +42,7 @@ const Detailed = () => {
       dispatch(fetchSingleWeather({ longitude, latitude }));
     }
   }, [searchParams, dispatch]);
+
   return (
     <div className="container">
       {weatherStatus === STATUS.IDLE || weatherStatus === STATUS.PENDING ? (
@@ -36,6 +56,14 @@ const Detailed = () => {
                 <h1 className="city-g-details__name">{weather.name}</h1>
               </div>
               <h2 className="city-g-details__unit">&#8451;</h2>
+            </div>
+            <div>
+              <FontAwesomeIcon
+                className="place-save"
+                icon={faBookmark}
+                color={bookmarked ? "#dfdf2d" : "grey"}
+                onClick={handleBookmark}
+              />
             </div>
             <div className="city-g-details__item city-g-details__item--right">
               <div>

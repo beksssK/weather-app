@@ -19,6 +19,7 @@ export const getPlaceReference = async (cityName) => {
 export const fetchGeneralWeather = createAsyncThunk(
   "generalWeather/fetchGeneralWeatherStatus",
   async (cities, thunkAPI) => {
+    console.log("started");
     const citiesWeather = await Promise.all(
       cities.map((city) => {
         return getWeather(city);

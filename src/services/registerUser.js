@@ -1,14 +1,15 @@
 export const registerUser = (userData, successCb) => {
+  const newUser = { ...userData };
   let errors = {};
   let users = JSON.parse(localStorage.getItem("users"));
   if (!users) {
     users = [];
   }
-  const emailExists = users.some((user) => user.email === userData.email);
+  const emailExists = users.some((user) => user.email === newUser.email);
   const usernameExists = users.some(
-    (user) => user.username === userData.username
+    (user) => user.username === newUser.username
   );
-  users.push(userData);
+  users.push(newUser);
   if (emailExists) {
     errors.email = "There is already a user with this email";
   }
@@ -18,6 +19,7 @@ export const registerUser = (userData, successCb) => {
   if (Object.keys(errors).length) {
     return errors;
   }
+  newUser.places = ["Moscow", "London", "New York", "Beijing", "Paris"];
   localStorage.setItem("users", JSON.stringify(users));
   successCb();
 };

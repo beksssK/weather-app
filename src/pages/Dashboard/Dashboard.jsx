@@ -11,6 +11,7 @@ import { STATUS } from "../../store/conf";
 
 const Dashboard = () => {
   const { weather, status } = useSelector((state) => state.generalWeather);
+  const { user } = useSelector((state) => state.user);
   const sliderItems = useMemo(() => {
     let refLink = `https://maps.googleapis.com/maps/api/place/photo?key=${GOOGLE_MAPS_API_KEY}&maxheight=400&photo_reference=`;
     return weather.map((city) => {
@@ -28,15 +29,16 @@ const Dashboard = () => {
   }, [weather]);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(
-      fetchGeneralWeather(["Moscow", "London", "New York", "Beijing", "Paris"])
-    );
-  }, [dispatch]);
+    if (user) {
+      dispatch(fetchGeneralWeather(user.places));
+    }
+  }, [dispatch, user]);
 
   const sliderSettings = {
     slidesPerShow: 2,
     slidesToScroll: 2,
   };
+  console.log(status);
 
   return (
     <div className="container">
