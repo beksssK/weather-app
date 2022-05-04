@@ -6,9 +6,11 @@ import { GOOGLE_MAPS_API_KEY } from "../../api/googleMapsApi";
 import WeatherGeneralInfo from "../../components/WeatherGeneralInfo/WeatherGeneralInfo";
 import "./index.scss";
 import PlaceSearch from "../../components/PlaceSearch/PlaceSearch";
+import Preloader from "../../components/Preloader/Preloader";
+import { STATUS } from "../../store/conf";
 
 const Dashboard = () => {
-  const weather = useSelector((state) => state.generalWeather.weather);
+  const { weather, status } = useSelector((state) => state.generalWeather);
   const sliderItems = useMemo(() => {
     let refLink = `https://maps.googleapis.com/maps/api/place/photo?key=${GOOGLE_MAPS_API_KEY}&maxheight=400&photo_reference=`;
     return weather.map((city) => {
@@ -39,9 +41,13 @@ const Dashboard = () => {
   return (
     <div className="container">
       <PlaceSearch />
-      <div className="global-weather">
-        <Slider items={sliderItems} settings={sliderSettings} />
-      </div>
+      {status === STATUS.PENDING ? (
+        <Preloader />
+      ) : (
+        <div className="global-weather">
+          <Slider items={sliderItems} settings={sliderSettings} />
+        </div>
+      )}
     </div>
   );
 };
