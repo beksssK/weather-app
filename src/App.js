@@ -5,21 +5,36 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Auth/Login";
 import Detailed from "./pages/Detailed/Detailed";
-import Auth from "./components/Auth/Auth";
 import Register from "./pages/Auth/Register";
+import Layout from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Auth>
+        <Layout>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/detailed"
+              element={
+                <PrivateRoute>
+                  <Detailed />
+                </PrivateRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
-            <Route path="/detailed" element={<Detailed />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        </Auth>
+        </Layout>
       </BrowserRouter>
     </Provider>
   );

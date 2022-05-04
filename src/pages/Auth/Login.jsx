@@ -17,13 +17,14 @@ const Login = () => {
   const navigate = useNavigate();
   const submitForm = useCallback(
     (values, { setSubmitting, setFieldError }) => {
-      const error = loginUser(values);
-      setFieldError("generalError", error);
+      const response = loginUser(values);
       setSubmitting(false);
-      if (!error) {
-        dispatch(authorize());
-        navigate("/");
+      if (response.errorMessage) {
+        setFieldError("generalError", response.errorMessage);
+        return;
       }
+      dispatch(authorize(response.user));
+      navigate("/");
     },
     [navigate, dispatch]
   );
@@ -77,8 +78,11 @@ const Login = () => {
             </Form>
           )}
         </Formik>
+        <div style={{ marginTop: 30 }}>
+          If you have signed up yet, proceed to
+          <Link to="/register"> Register</Link>
+        </div>
       </div>
-      <Link to="/register">Register</Link>
     </div>
   );
 };

@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  authorized: false,
+  user: null,
 };
 
 const userSlice = createSlice({
   name: "generalWeather",
   initialState,
   reducers: {
-    authorize: (state) => {
-      state.authorized = true;
+    authorize: (state, action) => {
+      state.user = action.payload;
     },
   },
 });

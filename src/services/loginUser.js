@@ -1,15 +1,20 @@
 export const loginUser = (userData) => {
-  const errorMessage = "Username or password is wrong";
+  const response = {};
   let users = JSON.parse(localStorage.getItem("users"));
   if (!users) {
-    return errorMessage;
+    response.errorMessage = "Username or password is wrong";
+    return response;
   }
-  const user = users.find((u) => u.username === userData.username);
-  if (!user) {
-    return errorMessage;
+  const localStorageUser = users.find((u) => u.username === userData.username);
+  if (!localStorageUser) {
+    response.errorMessage = "Username or password is wrong";
+    return response;
   }
-  if (user.password !== userData.password) {
-    return errorMessage;
+  if (localStorageUser.password !== userData.password) {
+    response.errorMessage = "Username or password is wrong";
+    return response;
   }
-  return null;
+  response.user = localStorageUser;
+  localStorage.setItem("user", JSON.stringify(localStorageUser));
+  return response;
 };
