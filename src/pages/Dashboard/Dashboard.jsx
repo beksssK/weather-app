@@ -38,7 +38,6 @@ const Dashboard = () => {
     slidesPerShow: 2,
     slidesToScroll: 2,
   };
-  console.log(status);
 
   return (
     <div className="container">

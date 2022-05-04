@@ -4,7 +4,7 @@ import googleMapsApi from "../api/googleMapsApi";
 
 export const getWeather = async (city) => {
   const weather = await weatherApi.get("/weather", {
-    params: { q: city, units: "metric" },
+    params: { id: city, units: "metric" },
   });
   return weather.data;
 };

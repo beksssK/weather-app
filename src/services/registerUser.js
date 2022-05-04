@@ -19,7 +19,7 @@ export const registerUser = (userData, successCb) => {
   if (Object.keys(errors).length) {
     return errors;
   }
-  newUser.places = ["Moscow", "London", "New York", "Beijing", "Paris"];
+  newUser.places = [524901, 2643743, 5128581, 1816670, 2988507];
   localStorage.setItem("users", JSON.stringify(users));
   successCb();
 };

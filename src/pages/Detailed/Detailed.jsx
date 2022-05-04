@@ -25,11 +25,11 @@ const Detailed = () => {
     if (!user || !weather) {
       return false;
     }
-    return user.places.some((place) => place === weather.name);
+    return user.places.some((place) => place === weather.id);
   }, [user, weather]);
   const handleBookmark = useCallback(() => {
-    togglePlace(weather.name);
-    dispatch(toggleUserPlace(weather.name));
+    togglePlace(weather.id);
+    dispatch(toggleUserPlace(weather.id));
   }, [weather, dispatch]);
 
   const [searchParams] = useSearchParams();
