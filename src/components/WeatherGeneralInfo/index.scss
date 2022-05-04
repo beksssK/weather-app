@@ -3,18 +3,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media all and (max-width: 500px) {
+    background: rgba(0, 0, 0, 0.35);
+  }
   &__main,
   &__temp {
     background: rgba(0, 0, 0, 0.35);
     padding: 20px;
     border-radius: 10px;
+    @media all and (max-width: 1000px) {
+      padding: 10px;
+    }
+    @media all and (max-width: 500px) {
+      background: transparent;
+    }
   }
   &__title {
     font-size: 35px;
     margin: 0;
+    @media all and (max-width: 1000px) {
+      font-size: 25px;
+    }
   }
   &__description {
     font-size: 20px;
+    @media all and (max-width: 1000px) {
+      font-size: 16px;
+    }
     &--main {
       margin-bottom: 10px;
     }

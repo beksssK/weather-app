@@ -12,21 +12,32 @@ import { faCircle, faDotCircle } from "@fortawesome/free-regular-svg-icons";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
+const Slider = ({
+  settings: { slidesPerShow, slidesToScroll, mobileBreakpoint },
+  items,
+}) => {
   const [currentItem, setCurrentItem] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(null);
 
   const [windowSize] = useWindowSize();
+
+  const slidesPerShowSlider = useMemo(() => {
+    return windowSize < mobileBreakpoint ? 1 : slidesPerShow;
+  }, [windowSize, slidesPerShow, mobileBreakpoint]);
+  const slidesToScrollSlider = useMemo(() => {
+    return windowSize < mobileBreakpoint ? 1 : slidesToScroll;
+  }, [windowSize, slidesToScroll, mobileBreakpoint]);
+
   const slider = useRef(null);
 
   const lastItemIndex = useMemo(() => items.length - 1, [items]);
   const offset = useMemo(() => {
-    return currentItem * (sliderWidth / slidesPerShow);
-  }, [currentItem, sliderWidth, slidesPerShow]);
+    return currentItem * (sliderWidth / slidesPerShowSlider);
+  }, [currentItem, sliderWidth, slidesPerShowSlider]);
 
   const lastShowingItem = useMemo(
-    () => lastItemIndex - slidesPerShow + 1,
-    [lastItemIndex, slidesPerShow]
+    () => lastItemIndex - slidesPerShowSlider + 1,
+    [lastItemIndex, slidesPerShowSlider]
   );
 
   useEffect(() => {
@@ -34,26 +45,26 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
   }, [slider, windowSize]);
 
   const nextSlider = useCallback(() => {
-    if (lastShowingItem < currentItem + slidesToScroll) {
+    if (lastShowingItem < currentItem + slidesToScrollSlider) {
       if (lastShowingItem === currentItem) {
         setCurrentItem(0);
       } else {
         setCurrentItem(lastShowingItem);
       }
     } else {
-      setCurrentItem(currentItem + slidesToScroll);
+      setCurrentItem(currentItem + slidesToScrollSlider);
     }
-  }, [currentItem, lastShowingItem, slidesToScroll]);
+  }, [currentItem, lastShowingItem, slidesToScrollSlider]);
 
   const previousSlider = useCallback(() => {
-    if (currentItem - slidesToScroll >= 0) {
-      setCurrentItem(currentItem - slidesToScroll);
+    if (currentItem - slidesToScrollSlider >= 0) {
+      setCurrentItem(currentItem - slidesToScrollSlider);
     } else if (!currentItem) {
-      setCurrentItem(lastItemIndex - slidesPerShow + 1);
+      setCurrentItem(lastItemIndex - slidesPerShowSlider + 1);
     } else {
       setCurrentItem(0);
     }
-  }, [currentItem, lastItemIndex, slidesToScroll, slidesPerShow]);
+  }, [currentItem, lastItemIndex, slidesToScrollSlider, slidesPerShowSlider]);
 
   const handleDotClick = useCallback(
     (idx) => {
@@ -81,7 +92,7 @@ const Slider = ({ settings: { slidesPerShow, slidesToScroll }, items }) => {
               exact="exact"
               to={`/detailed?lon=${item.coord.lon}&lat=${item.coord.lat}`}
               style={{
-                width: `${sliderWidth / slidesPerShow}px`,
+                width: `${sliderWidth / slidesPerShowSlider}px`,
               }}
               key={idx}
               className="slider__item"

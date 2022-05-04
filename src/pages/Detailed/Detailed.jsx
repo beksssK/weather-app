@@ -57,7 +57,7 @@ const Detailed = () => {
               </div>
               <h2 className="city-g-details__unit">&#8451;</h2>
             </div>
-            <div>
+            <div className="city-g-details__item city-g-details__item--center">
               <FontAwesomeIcon
                 className="place-save"
                 icon={faBookmark}

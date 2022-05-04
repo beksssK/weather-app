@@ -5,7 +5,6 @@ export const togglePlace = (place) => {
     return;
   }
   const placeIndex = user.places.findIndex((p) => p === place);
-  console.log(placeIndex);
   if (placeIndex >= 0) {
     user.places.splice(placeIndex, 1);
   } else {

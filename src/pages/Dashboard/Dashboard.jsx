@@ -37,6 +37,7 @@ const Dashboard = () => {
   const sliderSettings = {
     slidesPerShow: 2,
     slidesToScroll: 2,
+    mobileBreakpoint: 675
   };
 
   return (

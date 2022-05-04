@@ -1,7 +1,8 @@
 .city-g-details {
-  padding-top: 100px;
+  padding: 100px 40px 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   &__item--right {
     text-align: right;
   }
@@ -12,6 +13,9 @@
   }
   &__item {
     display: flex;
+    &--center{
+      margin: 30px;
+    }
   }
   &__temp {
     font-size: 50px;
@@ -24,10 +28,11 @@
   }
 }
 
-
 .weather-table {
   padding-top: 100px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   &__item {
     text-align: center;
     min-width: 100px;
