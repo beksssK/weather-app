@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import "./sass-utils/main.scss";
+import "./sass/main.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Auth/Login";

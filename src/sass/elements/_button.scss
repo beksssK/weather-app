@@ -1,0 +1,11 @@
+.button {
+  padding: 10px 15px;
+  font-size: 18px;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  &--primary {
+    background: #496ea2;
+    color: #fff;
+  }
+}
