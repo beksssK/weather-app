@@ -1,5 +1,5 @@
 import React from "react";
-import "./WeatherGeneralInfo.scss";
+import "./index.scss";
 
 const WeatherGeneralInfo = ({
   locationName,

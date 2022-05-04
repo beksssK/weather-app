@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGeneralWeather } from "../../services/generalWeather";
 import { GOOGLE_MAPS_API_KEY } from "../../api/googleMapsApi";
 import WeatherGeneralInfo from "../../components/WeatherGeneralInfo/WeatherGeneralInfo";
-import "./Dashboard.scss";
+import "./index.scss";
 
 const Dashboard = () => {
   const weather = useSelector((state) => state.generalWeather.weather);

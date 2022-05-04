@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import "./Slider.scss";
+import "./index.scss";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faDotCircle } from "@fortawesome/free-regular-svg-icons";
